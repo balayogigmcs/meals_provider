@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:meals/screens/meals_screen.dart';
 import 'package:meals/widgets/category_grid_item.dart';
+import 'package:meals/models/category.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
 // here we created _selectedCategory method to connet CategoriesScreen and MealsScreen
-  void _selectedCategory(BuildContext context) {
+  void _selectedCategory(BuildContext context, Category category) {
+    final filteredMeals = dummyMeals
+        .where((meal) => meal.categories.contains(category.id))
+        .toList(); // it is a condition to filter out the id in categories related to id in dummy meals if it matches it will store into the variable
     // here we are writing BuildContext context inside function because in stateless widgets context is not available globally
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MealsScreen(meals: [], title: 'some titile'),
+        builder: (ctx) =>  MealsScreen(
+          title: category.title,
+          meals: filteredMeals,
+        ),
       ),
     ); // Navigator.push(context,route)  both are same , here route is created using MaterialPageRoute class.
   }
@@ -35,7 +42,7 @@ class CategoriesScreen extends StatelessWidget {
             CategoryGridItem(
                 category: category,
                 onSelectedCategory: () {
-                  _selectedCategory(context);
+                  _selectedCategory(context,category);
                 })
         ],
       ),

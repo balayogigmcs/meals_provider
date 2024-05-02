@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.meals, required this.title});
+  const MealsScreen({super.key, required this.title, required this.meals});
 
   final List<Meal> meals;
   final String title;
@@ -10,10 +10,11 @@ class MealsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
-        itemCount: meals.length,
-        itemBuilder: (ctx, index) {
-          return Text(meals[index].title);
-        });
+      itemCount: meals.length,
+      itemBuilder: (ctx, index) => Text(
+        meals[index].title,
+      ),
+    );
     if (meals.isEmpty) {
       content = Center(
           child: Column(
@@ -41,7 +42,9 @@ class MealsScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(title),
+      ),
       body: content,
     );
   }
