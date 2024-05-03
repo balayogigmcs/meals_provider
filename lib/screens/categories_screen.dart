@@ -15,7 +15,7 @@ class CategoriesScreen extends StatelessWidget {
     // here we are writing BuildContext context inside function because in stateless widgets context is not available globally
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) =>  MealsScreen(
+        builder: (ctx) => MealsScreen(
           title: category.title,
           meals: filteredMeals,
         ),
@@ -25,27 +25,22 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Pick Your Category'),
-      ),
-      body: GridView(
-        padding: const EdgeInsets.all(24),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        children: [
-          // availableCategories.map((category) => CategoryGridItem(category: category))
-          for (final category in availableCategories)
-            CategoryGridItem(
-                category: category,
-                onSelectedCategory: () {
-                  _selectedCategory(context,category);
-                })
-        ],
-      ),
+    return GridView(
+      padding: const EdgeInsets.all(24),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20),
+      children: [
+        // availableCategories.map((category) => CategoryGridItem(category: category))
+        for (final category in availableCategories)
+          CategoryGridItem(
+              category: category,
+              onSelectedCategory: () {
+                _selectedCategory(context, category);
+              })
+      ],
     );
   }
 }
