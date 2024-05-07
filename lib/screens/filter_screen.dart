@@ -24,6 +24,8 @@ var _vegetarianFilterSet = false;
 var _veganFilterSet = false;
 
 class _FilterScreenState extends State<FilterScreen> {
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +76,7 @@ class _FilterScreenState extends State<FilterScreen> {
               value: _lactoseFreeFilterSet,
               onChanged: (isCheckedout) {
                 setState(() {
-                  _glutenFreeFilterSet = isCheckedout;
+                  _lactoseFreeFilterSet = isCheckedout;
                 });
               },
               title: Text(
@@ -94,7 +96,7 @@ class _FilterScreenState extends State<FilterScreen> {
               value: _vegetarianFilterSet,
               onChanged: (isCheckedout) {
                 setState(() {
-                  _glutenFreeFilterSet = isCheckedout;
+                  _vegetarianFilterSet = isCheckedout;
                 });
               },
               title: Text(
@@ -114,7 +116,7 @@ class _FilterScreenState extends State<FilterScreen> {
               value: _veganFilterSet,
               onChanged: (isCheckedout) {
                 setState(() {
-                  _glutenFreeFilterSet = isCheckedout;
+                  _veganFilterSet = isCheckedout;
                 });
               },
               title: Text(

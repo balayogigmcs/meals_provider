@@ -6,13 +6,14 @@ import 'package:meals/models/category.dart';
 import 'package:meals/models/meal.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key, required this.onToggleFavorite});
+  const CategoriesScreen({super.key, required this.onToggleFavorite,required this.availableMeals});
 
   final void Function(Meal meal) onToggleFavorite;
+  final List<Meal> availableMeals;
 
 // here we created _selectedCategory method to connet CategoriesScreen and MealsScreen
   void _selectedCategory(BuildContext context, Category category) {
-    final filteredMeals = dummyMeals
+    final filteredMeals = availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList(); // it is a condition to filter out the id in categories related to id in dummy meals if it matches it will store into the variable
     // here we are writing BuildContext context inside function because in stateless widgets context is not available globally

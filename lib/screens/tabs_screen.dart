@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:meals/data/dummy_data.dart';
 import 'package:meals/screens/categories_screen.dart';
 import 'package:meals/screens/filter_screen.dart';
 import 'package:meals/screens/meals_screen.dart';
 import 'package:meals/models/meal.dart';
 import 'package:meals/widgets/main_drawer.dart';
+
+const kInitialFilter = {
+  Filter.glutenFree: false,
+  Filter.lactoseFree: false,
+  Filter.vegan: false,
+  Filter.vegetarian: false,
+};
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -31,6 +39,7 @@ class _TabsScreenState extends State<TabsScreen> {
   }
 
   final List<Meal> _favoriteMeal = [];
+  Map<Filter, bool> _selectedFilters = kInitialFilter;
 
   void _toggleMealFavoritesStatus(Meal meal) {
     final isExisting = _favoriteMeal.contains(meal);
@@ -48,20 +57,39 @@ class _TabsScreenState extends State<TabsScreen> {
     }
   }
 
-  void _setScreen(String identifier) {
+  void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'Filters') {
-      Navigator.of(context).push(
+      final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(builder: (ctx) => const FilterScreen()),
       );
-    } 
+      setState(() {
+        _selectedFilters = result ?? kInitialFilter;
+      });
+// ?? indicates fallback value when result is null
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = CategoriesScreen(
-      onToggleFavorite: _toggleMealFavoritesStatus,
-    );
+  final availableMeals = dummyMeals.where((meal){
+    if(_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree){
+      return false;
+    }
+    if(_selectedFilters[Filter.lactoseFree]! && !meal.isLactoseFree){
+      return false;
+    }
+    if(_selectedFilters[Filter.vegan]! && !meal.isVegan){
+      return false;
+    }
+    if(_selectedFilters[Filter.vegetarian]! && !meal.isVegetarian){
+      return false;
+    }
+    return true;
+  }).toList();
+
+    Widget activePage =
+        CategoriesScreen(onToggleFavorite: _toggleMealFavoritesStatus,availableMeals: availableMeals);
     var activeTitlePage = 'Your Categories';
 
     if (_selectedPageIndex == 1) {
