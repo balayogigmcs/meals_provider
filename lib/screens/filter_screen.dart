@@ -18,13 +18,11 @@ class FilterScreen extends StatefulWidget {
   }
 }
 
-var _glutenFreeFilterSet = false;
-var _lactoseFreeFilterSet = false;
-var _vegetarianFilterSet = false;
-var _veganFilterSet = false;
-
 class _FilterScreenState extends State<FilterScreen> {
-  
+  var _glutenFreeFilterSet = false;
+  var _lactoseFreeFilterSet = false;
+  var _vegetarianFilterSet = false;
+  var _veganFilterSet = false;
 
   @override
   Widget build(BuildContext context) {
