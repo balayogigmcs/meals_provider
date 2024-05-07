@@ -12,6 +12,9 @@ class FilterScreen extends StatefulWidget {
 }
 
 var _glutenFreeFilterSet = false;
+var _lactoseFreeFilterSet = false;
+var _vegetarianFilterSet = false;
+var _veganFilterSet = false;
 
 class _FilterScreenState extends State<FilterScreen> {
   @override
@@ -45,6 +48,78 @@ class _FilterScreenState extends State<FilterScreen> {
             ),
             subtitle: Text(
               'Only Included Gluten-free Meals',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+          SwitchListTile(
+            value: _lactoseFreeFilterSet,
+            onChanged: (isCheckedout) {
+              setState(() {
+                _glutenFreeFilterSet = isCheckedout;
+              });
+            },
+            title: Text(
+              'Lactose-free',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
+            ),
+            subtitle: Text(
+              'Only Included Lactose-free Meals',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+          SwitchListTile(
+            value: _vegetarianFilterSet,
+            onChanged: (isCheckedout) {
+              setState(() {
+                _glutenFreeFilterSet = isCheckedout;
+              });
+            },
+            title: Text(
+              'vegetarian',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
+            ),
+            subtitle: Text(
+              'Only Included vegetarian Meals',
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+          SwitchListTile(
+            value: _veganFilterSet,
+            onChanged: (isCheckedout) {
+              setState(() {
+                _glutenFreeFilterSet = isCheckedout;
+              });
+            },
+            title: Text(
+              'Vegan',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
+            ),
+            subtitle: Text(
+              'Only Included Vegan Meals',
               style: Theme.of(context)
                   .textTheme
                   .labelMedium!
