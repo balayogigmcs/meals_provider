@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/models/meal.dart';
+import 'package:meals/provider/favorites_provider.dart';
 
-class MealDetailScreen extends StatelessWidget {
-  const MealDetailScreen({super.key, required this.meal, required this.onToggleFavorite});
+class MealDetailScreen extends ConsumerWidget {
+  const MealDetailScreen({super.key, required this.meal});
 
   final Meal meal;
-  final void Function(Meal meal) onToggleFavorite;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {// added to use riverpod package
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
-        actions: [IconButton(onPressed: () { 
-          onToggleFavorite(meal);
-        }, icon: const Icon(Icons.star))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                ref
+                    .read(favoriteMealsProvider.notifier)
+                    .toggleMealFavoritesStatus(meal);// to access the method from facoriteMealsProvider class
+              },
+              icon: const Icon(Icons.star))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
