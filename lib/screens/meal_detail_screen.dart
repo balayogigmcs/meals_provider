@@ -16,9 +16,15 @@ class MealDetailScreen extends ConsumerWidget {
         actions: [
           IconButton(
               onPressed: () {
-                ref
+        final wasAdded = ref
                     .read(favoriteMealsProvider.notifier)
-                    .toggleMealFavoritesStatus(meal);// to access the method from facoriteMealsProvider class
+                    .toggleMealFavoritesStatus(meal);
+                    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(wasAdded ? "Added to Favorites" : " Removed from Favorites"),
+      ),
+    );// to access the method from facoriteMealsProvider class
               },
               icon: const Icon(Icons.star))
         ],
