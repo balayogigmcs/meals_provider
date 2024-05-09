@@ -6,6 +6,7 @@ import 'package:meals/screens/filter_screen.dart';
 import 'package:meals/screens/meals_screen.dart';
 import 'package:meals/widgets/main_drawer.dart';
 import 'package:meals/provider/meals_provider.dart';
+import 'package:meals/provider/filter_provider.dart';
 
 const kInitialFilter = {
   Filter.glutenFree: false,
@@ -31,37 +32,33 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   }
 
   
-  Map<Filter, bool> _selectedFilters = kInitialFilter;
 
   
 
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'Filters') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
-        MaterialPageRoute(builder: (ctx) =>  FilterScreen(currentFilters: _selectedFilters)),
+       await Navigator.of(context).push<Map<Filter, bool>>(
+        MaterialPageRoute(builder: (ctx) =>  const FilterScreen()),
       );
-      setState(() {
-        _selectedFilters = result ?? kInitialFilter;
-      });
-// ?? indicates fallback value when result is null
     }
   }
 
   @override
   Widget build(BuildContext context) {
     final meals = ref.watch(mealsProvider);// ref refers the provider from riverpod
+    final activeFilters = ref.watch(filterProvider);
   final availableMeals = meals.where((meal){
-    if(_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree){
+    if(activeFilters[Filter.glutenFree]! && !meal.isGlutenFree){
       return false;
     }
-    if(_selectedFilters[Filter.lactoseFree]! && !meal.isLactoseFree){
+    if(activeFilters[Filter.lactoseFree]! && !meal.isLactoseFree){
       return false;
     }
-    if(_selectedFilters[Filter.vegan]! && !meal.isVegan){
+    if(activeFilters[Filter.vegan]! && !meal.isVegan){
       return false;
     }
-    if(_selectedFilters[Filter.vegetarian]! && !meal.isVegetarian){
+    if(activeFilters[Filter.vegetarian]! && !meal.isVegetarian){
       return false;
     }
     return true;

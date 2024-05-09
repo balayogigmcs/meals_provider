@@ -24,7 +24,7 @@ class MealDetailScreen extends ConsumerWidget {
       SnackBar(
         content: Text(wasAdded ? "Added to Favorites" : " Removed from Favorites"),
       ),
-    );// to access the method from facoriteMealsProvider class
+    );// to access the method from favoriteMealsProvider class
               },
               icon: const Icon(Icons.star))
         ],
