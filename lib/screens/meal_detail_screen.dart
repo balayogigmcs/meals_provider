@@ -9,24 +9,31 @@ class MealDetailScreen extends ConsumerWidget {
   final Meal meal;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {// added to use riverpod package
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final favoriteMeal = ref.watch(favoriteMealsProvider);
+
+    final isFavorite = favoriteMeal.contains(meal);
+    // added to use riverpod package
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
         actions: [
           IconButton(
               onPressed: () {
-        final wasAdded = ref
+                final wasAdded = ref
                     .read(favoriteMealsProvider.notifier)
                     .toggleMealFavoritesStatus(meal);
-                    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(wasAdded ? "Added to Favorites" : " Removed from Favorites"),
-      ),
-    );// to access the method from favoriteMealsProvider class
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(wasAdded
+                        ? "Added to Favorites"
+                        : " Removed from Favorites"),
+                  ),
+                ); // to access the method from favoriteMealsProvider class
               },
-              icon: const Icon(Icons.star))
+              icon: Icon(isFavorite ? Icons.star : Icons.star_border))
         ],
       ),
       body: SingleChildScrollView(
